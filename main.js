@@ -744,7 +744,7 @@ class WeishauptWem extends utils.Adapter {
                         }
                         for (const dataCell of dataGroup.querySelectorAll(".simpleDataIconCell")) {
                             if (dataCell.nextSibling) {
-                                const label = dataCell.nextElementSibling.textContent.trim().replace(/\./g, "");
+                                let label = dataCell.nextElementSibling.textContent.trim().replace(/\./g, "");
                                 let labelWoSpaces = label.replace(/ /g, "");
                                 let value = dataCell.nextElementSibling.nextElementSibling.textContent.trim();
 
