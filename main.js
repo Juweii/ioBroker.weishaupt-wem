@@ -767,19 +767,11 @@ class WeishauptWem extends utils.Adapter {
                                     labelWoSpaces = labelWoSpaces + statusCount;
                                     statusCount++;
                                 }
-                                else if (labelWoSpaces === "Vorlaufsolltemperatur") {
-                                    labelWoSpaces = labelWoSpaces + suffix;
-                                    label = label + " " + suffix;
-                                }
-                                else if (labelWoSpaces === "Vorlauftemperatur") {
-                                    labelWoSpaces = labelWoSpaces + suffix;
-                                    label = label + " " + suffix;
-                                }
-                                else if (labelWoSpaces === "Raumsolltemperatur") {
-                                    labelWoSpaces = labelWoSpaces + suffix;
-                                    label = label + " " + suffix;
-                                }
-                                else if (labelWoSpaces === "Raumtemperatur") {
+                                else if (labelWoSpaces === "Vorlaufsolltemperatur" ||
+                                         labelWoSpaces === "Vorlauftemperatur" ||
+                                         labelWoSpaces === "Raumsolltemperatur" ||
+                                         labelWoSpaces === "Raumtemperatur" ||
+                                         labelWoSpaces === "Rücklauftemperatur") {
                                     labelWoSpaces = labelWoSpaces + suffix;
                                     label = label + " " + suffix;
                                 }
