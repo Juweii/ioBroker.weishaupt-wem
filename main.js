@@ -729,8 +729,19 @@ class WeishauptWem extends utils.Adapter {
                     });
 
                     for (const dataGroup of dom.window.document.querySelectorAll(".rpRootGroup")) {
-                        const header = dataGroup.querySelector(".simpleDataHeaderTextCell").textContent.trim();
-                        this.log.debug(`Header ${header}`);
+                        const group = dataGroup.querySelector(".simpleDataHeaderTextCell").textContent.trim();
+                        this.log.debug(`Group ${group}`);
+                        let match;
+                        let suffix = "";
+                        if (match = group.match(/^Heizkreis ([0-9]+)$/)) {
+                            suffix = "HK"+match[1];
+                        }
+                        else if (group === "Wärmepumpe") {
+                            suffix = "WP";
+                        }
+                        else if (group === "2. WEZ") {
+                            suffix = "WEZ";
+                        }
                         for (const dataCell of dataGroup.querySelectorAll(".simpleDataIconCell")) {
                             if (dataCell.nextSibling) {
                                 const label = dataCell.nextElementSibling.textContent.trim().replace(/\./g, "");
@@ -755,6 +766,18 @@ class WeishauptWem extends utils.Adapter {
                                 if (labelWoSpaces === "Status") {
                                     labelWoSpaces = labelWoSpaces + statusCount;
                                     statusCount++;
+                                }
+                                else if (labelWoSpaces === "Vorlaufsolltemperatur") {
+                                    labelWoSpaces = labelWoSpaces + suffix;
+                                }
+                                else if (labelWoSpaces === "Vorlauftemperatur") {
+                                    labelWoSpaces = labelWoSpaces + suffix;
+                                }
+                                else if (labelWoSpaces === "Raumsolltemperatur") {
+                                    labelWoSpaces = labelWoSpaces + suffix;
+                                }
+                                else if (labelWoSpaces === "Raumtemperatur") {
+                                    labelWoSpaces = labelWoSpaces + suffix;
                                 }
                                 this.log.debug(`Found ${label} with value ${value} and unit ${unit} `);
                                 this.setObjectNotExistsAsync(deviceInfo + "." + labelWoSpaces, {
