@@ -730,7 +730,7 @@ class WeishauptWem extends utils.Adapter {
 
                     for (const dataGroup of dom.window.document.querySelectorAll(".rpRootGroup")) {
                         const header = dataGroup.querySelector(".simpleDataHeaderTextCell").textContent.trim();
-                        this.login.debug(`Header ${header}`);
+                        this.log.debug(`Header ${header}`);
                         for (const dataCell of dataGroup.querySelectorAll(".simpleDataIconCell")) {
                             if (dataCell.nextSibling) {
                                 const label = dataCell.nextElementSibling.textContent.trim().replace(/\./g, "");
