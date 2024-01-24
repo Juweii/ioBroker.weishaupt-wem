@@ -769,15 +769,19 @@ class WeishauptWem extends utils.Adapter {
                                 }
                                 else if (labelWoSpaces === "Vorlaufsolltemperatur") {
                                     labelWoSpaces = labelWoSpaces + suffix;
+                                    label = label + " " + suffix;
                                 }
                                 else if (labelWoSpaces === "Vorlauftemperatur") {
                                     labelWoSpaces = labelWoSpaces + suffix;
+                                    label = label + " " + suffix;
                                 }
                                 else if (labelWoSpaces === "Raumsolltemperatur") {
                                     labelWoSpaces = labelWoSpaces + suffix;
+                                    label = label + " " + suffix;
                                 }
                                 else if (labelWoSpaces === "Raumtemperatur") {
                                     labelWoSpaces = labelWoSpaces + suffix;
+                                    label = label + " " + suffix;
                                 }
                                 this.log.debug(`Found ${label} with value ${value} and unit ${unit} `);
                                 this.setObjectNotExistsAsync(deviceInfo + "." + labelWoSpaces, {
