@@ -728,46 +728,50 @@ class WeishauptWem extends utils.Adapter {
                         this.setState(deviceInfo + ".OnlineStatus", status, true);
                     });
 
-                    for (const dataCell of dom.window.document.querySelectorAll(".simpleDataIconCell")) {
-                        if (dataCell.nextSibling) {
-                            const label = dataCell.nextElementSibling.textContent.trim().replace(/\./g, "");
-                            let labelWoSpaces = label.replace(/ /g, "");
-                            let value = dataCell.nextElementSibling.nextElementSibling.textContent.trim();
+                    for (const dataGroup of dom.window.document.querySelectorAll(".rpRootGroup")) {
+                        const header = dataGroup.querySelector(".simpleDataHeaderTextCell").textContent.trim();
+                        this.login.debug(`Header ${header}`);
+                        for (const dataCell of dataGroup.querySelectorAll(".simpleDataIconCell")) {
+                            if (dataCell.nextSibling) {
+                                const label = dataCell.nextElementSibling.textContent.trim().replace(/\./g, "");
+                                let labelWoSpaces = label.replace(/ /g, "");
+                                let value = dataCell.nextElementSibling.nextElementSibling.textContent.trim();
 
-                            let valueArray = value.split(" ");
-                            if (valueArray.length === 1) {
-                                valueArray = value.split("m");
-                                if (valueArray[1]) {
-                                    valueArray[1] = "m" + valueArray[1];
+                                let valueArray = value.split(" ");
+                                if (valueArray.length === 1) {
+                                    valueArray = value.split("m");
+                                    if (valueArray[1]) {
+                                        valueArray[1] = "m" + valueArray[1];
+                                    }
                                 }
+                                valueArray[0] = valueArray[0].replace(",", ".");
+                                let unit = "";
+                                if (!isNaN(valueArray[0])) {
+                                    value = parseFloat(valueArray[0]);
+                                }
+                                if (valueArray[1]) {
+                                    unit = valueArray[1];
+                                }
+                                if (labelWoSpaces === "Status") {
+                                    labelWoSpaces = labelWoSpaces + statusCount;
+                                    statusCount++;
+                                }
+                                this.log.debug(`Found ${label} with value ${value} and unit ${unit} `);
+                                this.setObjectNotExistsAsync(deviceInfo + "." + labelWoSpaces, {
+                                    type: "state",
+                                    common: {
+                                        name: label,
+                                        role: "indicator",
+                                        type: "mixed",
+                                        write: false,
+                                        read: true,
+                                        unit: unit,
+                                    },
+                                    native: {},
+                                }).then(() => {
+                                    this.setState(deviceInfo + "." + labelWoSpaces, value, true);
+                                });
                             }
-                            valueArray[0] = valueArray[0].replace(",", ".");
-                            let unit = "";
-                            if (!isNaN(valueArray[0])) {
-                                value = parseFloat(valueArray[0]);
-                            }
-                            if (valueArray[1]) {
-                                unit = valueArray[1];
-                            }
-                            if (labelWoSpaces === "Status") {
-                                labelWoSpaces = labelWoSpaces + statusCount;
-                                statusCount++;
-                            }
-                            this.log.debug(`Found ${label} with value ${value} and unit ${unit} `);
-                            this.setObjectNotExistsAsync(deviceInfo + "." + labelWoSpaces, {
-                                type: "state",
-                                common: {
-                                    name: label,
-                                    role: "indicator",
-                                    type: "mixed",
-                                    write: false,
-                                    read: true,
-                                    unit: unit,
-                                },
-                                native: {},
-                            }).then(() => {
-                                this.setState(deviceInfo + "." + labelWoSpaces, value, true);
-                            });
                         }
                     }
                 } catch (error) {
