@@ -763,6 +763,16 @@ class WeishauptWem extends utils.Adapter {
                                 if (valueArray[1]) {
                                     unit = valueArray[1];
                                 }
+                                if ((labelWoSpaces === "Leistungsanforderung" ||
+                                     labelWoSpaces === "Soll Leistung" ||
+                                     labelWoSpaces === "Ist Leistung") && 
+                                    value === "Aus") {
+                                    value = 0;
+                                }
+                                else if (labelWoSpaces === "Anforderung" && 
+                                    value === "--") {
+                                    value = null;
+                                }
                                 if (labelWoSpaces === "Status") {
                                     labelWoSpaces = labelWoSpaces + statusCount;
                                     statusCount++;
