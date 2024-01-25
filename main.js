@@ -764,8 +764,8 @@ class WeishauptWem extends utils.Adapter {
                                     unit = valueArray[1];
                                 }
                                 if ((labelWoSpaces === "Leistungsanforderung" ||
-                                     labelWoSpaces === "Soll Leistung" ||
-                                     labelWoSpaces === "Ist Leistung") && 
+                                     labelWoSpaces === "SollLeistung" ||
+                                     labelWoSpaces === "IstLeistung") && 
                                     value === "Aus") {
                                     value = 0;
                                 }
